@@ -1,0 +1,222 @@
+GIT
+  remote: https://github.com/CocoaPods/CLAide.git
+  revision: d5a7ef8f3e730f195ecb3dfd2ec5891d1c6988d7
+  branch: master
+  specs:
+    claide (1.0.0.beta.1)
+
+GIT
+  remote: https://github.com/CocoaPods/Molinillo.git
+  revision: 163738c406f5cfc1bb7fbc9487b5ae45b8e82ae4
+  branch: master
+  specs:
+    molinillo (0.4.3)
+
+GIT
+  remote: https://github.com/CocoaPods/Xcodeproj.git
+  revision: c899268b9830af495d13654e01d2202cbdc42a49
+  branch: master
+  specs:
+    xcodeproj (1.0.0.beta.3)
+      activesupport (>= 3)
+      claide (>= 1.0.0.beta.1, < 2.0)
+      colored (~> 1.2)
+
+GIT
+  remote: https://github.com/CocoaPods/cocoapods-deintegrate.git
+  revision: 970d9a930176e8a625ab5b20fbf5a0fa8a8c5869
+  branch: master
+  specs:
+    cocoapods-deintegrate (1.0.0.beta.1)
+
+GIT
+  remote: https://github.com/CocoaPods/cocoapods-downloader.git
+  revision: 87ef8c7109e974e68b4848c4d04e04ad6d4908d5
+  branch: master
+  specs:
+    cocoapods-downloader (1.0.0.beta.1)
+
+GIT
+  remote: https://github.com/CocoaPods/cocoapods-plugins.git
+  revision: 7ae90262ab567fb8331f40dd17f0d79a3dc1551a
+  branch: master
+  specs:
+    cocoapods-plugins (1.0.0.beta.1)
+      nap
+
+GIT
+  remote: https://github.com/CocoaPods/cocoapods-stats.git
+  revision: 8569ef61bd7d52f5d6d3e91ceb299bda7b86748c
+  branch: master
+  specs:
+    cocoapods-stats (1.0.0.beta.3)
+
+GIT
+  remote: https://github.com/CocoaPods/cocoapods-trunk.git
+  revision: 5892bb297bff9180b4980dcf37502621cb6eaf97
+  branch: master
+  specs:
+    cocoapods-trunk (1.0.0.beta.2)
+      nap (>= 0.8, < 2.0)
+      netrc (= 0.7.8)
+
+GIT
+  remote: https://github.com/CocoaPods/cocoapods-try.git
+  revision: a4d7f1274f0a22aa1c3700c72603228f41699e83
+  branch: master
+  specs:
+    cocoapods-try (1.0.0.beta.2)
+
+GIT
+  remote: https://github.com/segiddins/json.git
+  revision: d4011cabfaa80e9b0da81947b5e9b38dd47359db
+  branch: seg-1.7.7-ruby-2.2
+  specs:
+    json (1.7.7)
+
+PATH
+  remote: .
+  specs:
+    hdev (1.0.0.beta.4)
+      activesupport (>= 4.0.2)
+      claide (>= 1.0.0.beta.1, < 2.0)
+      cocoapods-deintegrate (>= 1.0.0.beta.1, < 2.0)
+      cocoapods-downloader (>= 1.0.0.beta.1, < 2.0)
+      cocoapods-plugins (>= 1.0.0.beta.1, < 2.0)
+      cocoapods-stats (>= 1.0.0.beta.3, < 2.0)
+      cocoapods-trunk (>= 1.0.0.beta.2, < 2.0)
+      cocoapods-try (>= 1.0.0.beta.2, < 2.0)
+      colored (~> 1.2)
+      escape (~> 0.0.4)
+      fourflusher (~> 0.3.0)
+      molinillo (~> 0.4.3)
+      nap (~> 1.0)
+      xcodeproj (>= 1.0.0.beta.3, < 2.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.2.5.1)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    addressable (2.3.6)
+    ast (2.2.0)
+    astrolabe (1.3.1)
+      parser (~> 2.2)
+    awesome_print (1.6.1)
+    bacon (1.2.0)
+    clintegracon (0.8.1)
+      colored (~> 1.2)
+      diffy
+    cocoapods-dependencies (1.0.0.beta.1)
+      ruby-graphviz (~> 1.2)
+    coderay (1.1.0)
+    colored (1.2)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
+    diffy (3.1.0)
+    escape (0.0.4)
+    ffi (1.9.6)
+    fourflusher (0.3.0)
+    i18n (0.7.0)
+    inch (0.7.0)
+      pry
+      sparkr (>= 0.2.0)
+      term-ansicolor
+      yard (~> 0.8.7.5)
+    inch_by_inch (1.0.0)
+      inch (~> 0.7.0)
+      rake (~> 10.0)
+    kicker (3.0.0)
+      listen (~> 1.3.0)
+      notify (~> 0.5.2)
+    listen (1.3.1)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+      rb-kqueue (>= 0.2)
+    metaclass (0.0.4)
+    method_source (0.8.2)
+    minitest (5.8.4)
+    mocha (1.1.0)
+      metaclass (~> 0.0.1)
+    mocha-on-bacon (0.2.2)
+      mocha (>= 0.13.0)
+    nap (1.1.0)
+    netrc (0.7.8)
+    notify (0.5.2)
+    parser (2.3.0.2)
+      ast (~> 2.2)
+    powerpack (0.1.1)
+    prettybacon (0.0.2)
+      bacon (~> 1.2)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    rainbow (2.0.0)
+    rake (10.4.2)
+    rb-fsevent (0.9.4)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
+    rb-kqueue (0.2.3)
+      ffi (>= 0.5.0)
+    rubocop (0.34.2)
+      astrolabe (~> 1.3)
+      parser (>= 2.2.2.5, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.4)
+    ruby-graphviz (1.2.2)
+    ruby-prof (0.15.2)
+    ruby-progressbar (1.7.5)
+    safe_yaml (1.0.4)
+    slop (3.6.0)
+    sparkr (0.4.1)
+    term-ansicolor (1.3.2)
+      tins (~> 1.0)
+    thread_safe (0.3.5)
+    tins (1.8.1)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    webmock (1.20.4)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+    yard (0.8.7.6)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  awesome_print
+  bacon
+  bundler (~> 1.3)
+  claide!
+  clintegracon
+  cocoapods-deintegrate!
+  cocoapods-dependencies (~> 1.0.beta.1)
+  cocoapods-downloader!
+  cocoapods-plugins!
+  cocoapods-stats!
+  cocoapods-trunk!
+  cocoapods-try!
+  diffy
+  hdev!
+  inch_by_inch
+  json!
+  kicker
+  mocha
+  mocha-on-bacon
+  molinillo!
+  prettybacon
+  rake (~> 10.0)
+  rb-fsevent
+  rubocop
+  ruby-prof
+  webmock
+  xcodeproj!
+
+BUNDLED WITH
+   1.11.2
