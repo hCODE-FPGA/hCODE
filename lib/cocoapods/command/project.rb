@@ -73,23 +73,10 @@ module Pod
     class Install < Command
       include Project
 
-      self.summary = 'Install project dependencies to Podfile.lock versions'
+      self.summary = 'Install shell, ip, or app defined in hCODE.conf file.'
 
       self.description = <<-DESC
-        Downloads all dependencies defined in `Podfile` and creates an Xcode
-        Pods library project in `./Pods`.
-
-        The Xcode project file should be specified in your `Podfile` like this:
-
-            project 'path/to/XcodeProject'
-
-        If no project is specified, then a search for an Xcode project will
-        be made. If more than one Xcode project is found, the command will
-        raise an error.
-
-        This will configure the project to reference the Pods static library,
-        add a build configuration file, and add a post build script to copy
-        Pod resources.
+        Downloads all shell, ip, or app defined in `hCODE.conf`.
       DESC
 
       def run
@@ -100,58 +87,6 @@ module Pod
 
     #-------------------------------------------------------------------------#
 
-    class Update < Command
-      include Project
-
-      self.summary = 'Update outdated project dependencies and create new ' \
-        'Podfile.lock'
-
-      self.description = <<-DESC
-        Updates the Pods identified by the specified `POD_NAMES`. If no
-        `POD_NAMES` are specified it updates all the Pods ignoring the contents
-        of the Podfile.lock.
-        This command is reserved to the update of dependencies and pod install
-        should be used to install changes to the Podfile.
-      DESC
-
-      self.arguments = [
-        CLAide::Argument.new('POD_NAMES', false, true),
-      ]
-
-      def initialize(argv)
-        @pods = argv.arguments! unless argv.arguments.empty?
-        super
-      end
-
-      def run
-        verify_podfile_exists!
-
-        if @pods
-          verify_lockfile_exists!
-
-          # Check if all given pods are installed
-          lockfile_roots = config.lockfile.pod_names.map { |p| Specification.root_name(p) }
-          missing_pods = @pods.map { |p| Specification.root_name(p) }.select do |pod|
-            !lockfile_roots.include?(pod)
-          end
-
-          if missing_pods.length > 0
-            if missing_pods.length > 1
-              message = "Pods `#{missing_pods.join('`, `')}` are not " \
-                'installed and cannot be updated'
-            else
-              message = "The `#{missing_pods.first}` Pod is not installed " \
-                'and cannot be updated'
-            end
-            raise Informative, message
-          end
-
-          run_install_with_update(:pods => @pods)
-        else
-          UI.puts 'Update all pods'.yellow unless @pods
-          run_install_with_update(true)
-        end
-      end
-    end
+    
   end
 end

@@ -11,7 +11,7 @@ module Pod
   class Command
     class Spec < Command
       self.abstract_command = true
-      self.summary = 'Manage pod specs'
+      self.summary = 'Manage hCODE specs'
 
       #-----------------------------------------------------------------------#
 

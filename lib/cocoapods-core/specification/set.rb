@@ -122,6 +122,13 @@ module Pod
         }
       end
 
+      def repo_url
+        require 'json'
+        json = File.read(highest_version_spec_path.to_s)
+        spec = JSON.parse(json)
+        spec["source"]
+      end
+
       #-----------------------------------------------------------------------#
 
       # The Set::External class handles Pods from external sources. Pods from

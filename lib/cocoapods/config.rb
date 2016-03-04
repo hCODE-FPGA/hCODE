@@ -212,10 +212,10 @@ module Pod
 
     # Returns the path of the Lockfile.
     #
-    # @note The Lockfile is named `Podfile.lock`.
+    # @note The Lockfile is named `hCODE.conf.lock`.
     #
     def lockfile_path
-      @lockfile_path ||= installation_root + 'Podfile.lock'
+      @lockfile_path ||= installation_root + 'hCODE.conf.lock'
     end
 
     # Returns the path of the default Podfile pods.
@@ -225,7 +225,7 @@ module Pod
     # @return [Pathname]
     #
     def default_podfile_path
-      @default_podfile_path ||= templates_dir + 'Podfile.default'
+      @default_podfile_path ||= templates_dir + 'hCODE.conf.default'
     end
 
     # Returns the path of the default Podfile test pods.
@@ -235,7 +235,7 @@ module Pod
     # @return [Pathname]
     #
     def default_test_podfile_path
-      @default_test_podfile_path ||= templates_dir + 'Podfile.test'
+      @default_test_podfile_path ||= templates_dir + 'hCODE.conf.test'
     end
 
     # @return [Pathname] The file to use to cache the search data.
@@ -277,6 +277,7 @@ module Pod
       'CocoaPods.podfile.yaml',
       'CocoaPods.podfile',
       'Podfile',
+      'hCODE.conf',
     ].freeze
 
     public

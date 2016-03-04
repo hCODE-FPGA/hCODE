@@ -40,8 +40,8 @@ module Pod
             help! 'A type of shell, ip or app is required.'
           end
 
-          (Pathname.pwd + "hfpga.spec").open('w') { |f| f << spec }
-          UI.puts "\nSpecification of type #{@type} created at hfpga.spec".green
+          (Pathname.pwd + "hcode.spec").open('w') { |f| f << spec }
+          UI.puts "\nSpecification of type #{@type} created at hcode.spec".green
         end
 
         private

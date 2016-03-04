@@ -146,13 +146,13 @@ module Pod
     # @return [String] the user-facing name for a {Podfile}.
     #
     def name_for_explicit_dependency_source
-      'Podfile'
+      'hCODE.conf'
     end
 
     # @return [String] the user-facing name for a {Lockfile}.
     #
     def name_for_locking_dependency_source
-      'Podfile.lock'
+      'hCODE.conf.lock'
     end
 
     # Determines whether the given `requirement` is satisfied by the given

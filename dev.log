@@ -1,13 +1,14 @@
 
 Todo list:
 HW developer
- + create a hcode project, init a hfpga.spec
+ + create a hcode project, init a hcode.spec
  + shell/ip/app and driver folder organize, git
- + upload hcode project to self Github repo, and send a hfpga.spec to hFPGA SPEC repo.
+ + upload hcode project to self Github repo, and send a hcode.spec to hFPGA SPEC repo.
  + search hcode projects by any name string, shell/ip/app type, etc.
 
 SW developer
- - download app, shell, ip and manage a useable folder/project.
+ + create ip and manage a useable folder/project which a given shell.
+ + download app, shell, ip and manage a useable folder/project.
  - auto compile ip to hdl.
  - auto compile app, shell, ip to bitstream.
  - auto compile shell driver, ip driver, and prepare java wrapper.
@@ -19,14 +20,20 @@ confirmed commmand
  - ./hcode search [text]					#Search hcode projects with [text] in their name.
  - ./hcode search -full [text]				#Search hcode projects with [text] in their name, summary or description field.
  - ./hcode spec cat [test]					#Print spec file of hcode project that name contains [text]
- - ./hcode spec create [type] 				#Create a demo hfpga.spec file of [type]
+ - ./hcode spec create [type] 				#Create a demo hcode.spec file of [type]
 
 2016/3/1
- - ./hcode spec lint hfpga.spec 			#Validate the json format of the SPEC file.
+ - ./hcode spec lint hcode.spec 			#Validate the json format of the SPEC file.
  - ./hcode repo
  - ./hcode repo add [NAME] [URL]			#add a private repo to ~/.hcode/repos/[NAME]/
  - ./hcode remove [NAME]					#remove private repo located at ~/.hcode/repose/[NAME]/
- - ./hcode repo push [NAME] ./hfpga.spec 	#push hfpga.spec to ~/.hcode/repose/[NAME]/ repo
+ - ./hcode repo push [NAME] hcode.spec 		#push hcode.spec to ~/.hcode/repose/[NAME]/ repo
+
+2016/3/2
+ - ./hcode ip create [NAME] [SHELL]			#Create ip template project of [NAME] using a [SHELL]
+
+2016/3/3
+ - ./hcode ip get [NAME] [TAG]				#Downloading a IP and a compatable SHELL.
 
 
 
@@ -40,9 +47,9 @@ Follow the instructions to commit your shell/ip/app to hCODE repo:
    $hcode repo add ipmaker https://github.com/ipmaker/Specs
 4. Create a SPEC file in your project folder:
    $hcode spec create ip
-   Edit the information of the generated hfpga.spec file.
-   Validate the final hfpga.spec file.
-   $hcode spec lint hfpga.spec
-5. Push your hfpga.spec to your own repo:
-   #hcode repo push ipmaker hfpga.spec
+   Edit the information of the generated hcode.spec file.
+   Validate the final hcode.spec file.
+   $hcode spec lint hcode.spec
+5. Push your hcode.spec to your own repo:
+   #hcode repo push ipmaker hcode.spec
 6. Send pull request to hCODE master repo at https://github.com/ipmaker/Specs/pulls. And we will evaluate your project and merge your SPEC as soon as possible.

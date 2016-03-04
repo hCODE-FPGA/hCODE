@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'xcodeproj'
+#require 'xcodeproj'
 
 # It is very likely that we'll need these and as some of those paths will atm
 # result in a I18n deprecation warning, we load those here now so that we can
@@ -53,7 +53,7 @@ module Pod
 
   autoload :Version,        'cocoapods-core/version'
   autoload :Requirement,    'cocoapods-core/requirement'
-  autoload :Dependency,     'cocoapods-core/dependency'
+  #autoload :Dependency,     'cocoapods-core/dependency'
   autoload :CoreUI,         'cocoapods-core/core_ui'
   autoload :DSLError,       'cocoapods-core/standard_error'
   autoload :GitHub,         'cocoapods-core/github'
@@ -69,7 +69,7 @@ module Pod
 
   autoload :AggregateTarget,           'cocoapods/target/aggregate_target'
   autoload :Command,                   'cocoapods/command'
-  autoload :Deintegrator,              'cocoapods_deintegrate'
+  #autoload :Deintegrator,              'cocoapods_deintegrate'
   autoload :Executable,                'cocoapods/executable'
   autoload :ExternalSources,           'cocoapods/external_sources'
   autoload :Installer,                 'cocoapods/installer'

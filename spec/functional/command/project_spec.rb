@@ -2,7 +2,7 @@ require File.expand_path('../../../spec_helper', __FILE__)
 
 module Pod
   describe Command::Project do
-    it 'tells the user that no Podfile or podspec was found in the current working dir' do
+    it 'tells the user that no hCODE.conf or spec was found in the current working dir' do
       Command::Install.new(CLAide::ARGV.new(['--no-repo-update']))
       config.skip_repo_update.should.be.true
     end
@@ -11,9 +11,9 @@ module Pod
   #---------------------------------------------------------------------------#
 
   describe Command::Install do
-    it 'tells the user that no Podfile or podspec was found in the project dir' do
+    it 'tells the user that no hCODE.conf or spec was found in the project dir' do
       exception = lambda { run_command('install', '--no-repo-update') }.should.raise Informative
-      exception.message.should.include "No `Podfile' found in the project directory."
+      exception.message.should.include "No `hCODE.conf' found in the project directory."
     end
   end
 
@@ -28,7 +28,7 @@ module Pod
     end
 
     it 'tells the user that no Lockfile was found in the project dir' do
-      file = temporary_directory + 'Podfile'
+      file = temporary_directory + 'hCODE.conf'
       File.open(file, 'w') do |f|
         f.puts('platform :ios')
         f.puts('pod "Reachability"')
@@ -43,24 +43,24 @@ module Pod
       extend SpecHelper::TemporaryRepos
 
       before do
-        file = temporary_directory + 'Podfile'
+        file = temporary_directory + 'hCODE.conf'
         File.open(file, 'w') do |f|
-          f.puts('platform :ios')
-          f.puts('pod "BananaLib", "1.0"')
+          f.puts('platform :vc707')
+          f.puts('pod "shell-vc707-xillybus-ap_fifo32", "0.1.0"')
         end
 
         podfile = Podfile.new do
           platform :ios
-          pod 'BananaLib', '1.0'
+          pod 'shell-vc707-xillybus-ap_fifo32', '0.1.0'
         end
         specs = [
           Specification.new do |s|
-            s.name = 'BananaLib'
-            s.version = '1.0'
+            s.name = 'shell-vc707-xillybus-ap_fifo32'
+            s.version = '0.1.0'
           end,
         ]
         external_sources = {}
-        Lockfile.generate(podfile, specs, external_sources).write_to_disk(temporary_directory + 'Podfile.lock')
+        Lockfile.generate(podfile, specs, external_sources).write_to_disk(temporary_directory + 'hCODE.conf.lock')
       end
 
       it 'for a single missing Pod' do

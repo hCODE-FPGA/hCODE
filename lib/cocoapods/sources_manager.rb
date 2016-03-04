@@ -158,10 +158,21 @@ module Pod
 
         if sets.empty?
           extra = ', author, summary, or description' if full_text_search
-          raise Informative, "Unable to find a pod with name#{extra}" \
+          raise Informative, "Unable to find a repo with name#{extra}" \
             "matching `#{query}`"
         end
         sorted_sets(sets, query_word_regexps)
+      end
+
+      def fuzzy_search_by_name(query)
+        query_word_regexps = query.split.map { |word| /^#{word}$/ }
+        sets = aggregate.fuzzy_search_by_name(query)
+
+        if sets.empty?
+          raise Informative, "Unable to find a repo with name#{extra}" \
+            "matching `#{query}`"
+        end
+        sets[0]
       end
 
       # Returns given set array by sorting it in-place.

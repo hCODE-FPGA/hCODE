@@ -1,49 +1,151 @@
 module Pod
   class Command
-    class Lib < Command
+    class Ip < Command
       self.abstract_command = true
-      self.summary = 'Develop pods'
+      self.summary = 'Develop hardware IP'
 
       #-----------------------------------------------------------------------#
-
-      class Create < Lib
-        self.summary = 'Creates a new Pod'
+      class Get < Ip
+        self.summary = 'Download an IP and as well as a compatible shell for your enviroment'
 
         self.description = <<-DESC
-          Creates a scaffold for the development of a new Pod named `NAME`
-          according to the CocoaPods best practices.
-          If a `TEMPLATE_URL`, pointing to a git repo containing a compatible
-          template, is specified, it will be used in place of the default one.
+          Download the IP from a given IP_REPO_NAME.
+          A IP_REPO_VERSION tag can also be specified.
+        DESC
+
+        self.arguments = [
+          CLAide::Argument.new('IP_REPO_NAME', true),
+          CLAide::Argument.new('IP_REPO_VERSION', false),
+        ]
+
+        def initialize(argv)
+          @ip_name = argv.shift_argument
+          @ip_tag = argv.shift_argument
+          super
+        end
+
+        def validate!
+          super
+          help! 'A url for the IP repo is required.' unless @ip_name
+        end
+
+        def run
+          url = repo_from_name(@ip_name)
+          make_project_dir
+
+          @ip_tag = url["tag"] unless @ip_tag
+
+          UI.puts "Get ip #{@ip_name} ~> #{@ip_tag}".green
+          clone(url["git"], @ip_tag, "#{@ip_name}/ip/#{@ip_name}")
+          shells_for_ip()
+          
+          #configure_template
+          #print_info
+        end
+
+        private
+
+        #----------------------------------------#
+
+        # !@group Private helpers
+
+        extend Executable
+        executable :git
+
+        def repo_from_name(name)
+          set = SourcesManager.fuzzy_search_by_name(name)
+          set.repo_url
+        end
+
+        def make_project_dir
+          FileUtils.mkdir_p("#{@ip_name}")
+          FileUtils.mkdir_p("#{@ip_name}/ip")
+          FileUtils.mkdir_p("#{@ip_name}/shell")
+        end
+
+        def shells_for_ip
+          UI.puts "Get shell for #{@ip_name} ~> #{@ip_tag}".green
+
+          json = File.read("#{@ip_name}/ip/#{@ip_name}/hcode.spec")
+          spec = JSON.parse(json)
+          urls = Array.new
+          spec["shells"].each{|shell|
+              urls.push repo_from_name(shell[0])
+          }
+
+          index = 0
+          if spec["shells"].length > 1
+            message = "Choose a shell.".green
+            index = UI.choose_from_array(urls, message)
+          end
+
+          clone(urls[index]["git"], urls[0]["tag"], "#{@ip_name}/shell/")
+        end
+
+
+
+        # Clones the repo from the remote in the path directory using
+        # the url, tag of IP repo.
+        #
+        # @return [void]
+        #
+        def clone(url, tag, dir)
+          UI.section("Cloning #{url} with tag #{tag}.") do
+            git! ['clone', url, dir]
+            Dir.chdir(dir) { git!('checkout', "tags/#{tag}") } if tag
+          end
+        end
+
+        # Runs the template configuration utilities.
+        #
+        # @return [void]
+        #
+        def print_info
+          UI.puts "\nTo learn more about the ip see `#{@ip_url}`."
+        end
+      end
+
+
+      class Create < Ip
+        self.summary = 'Creates a new IP'
+
+        self.description = <<-DESC
+          Creates a scaffold for the development of a new IP named `NAME`
+          according to the hCODE best practices.
+
+          A repo url pointing to a `SHELL` is also required. You can find
+          a proper hCODE shell by using the command `hcode search [keyword]`.
+
+          If you are creating a hardware all on your own(not hCODE shell-ip way),
+          you just need to type `hcode spec create app`, edit the hcode.spec,
+          and sharing it by `hcode repo push [your-repo] hcode.spec` command.
         DESC
 
         self.arguments = [
           CLAide::Argument.new('NAME', true),
+          CLAide::Argument.new('SHELL', true),
         ]
-
-        def self.options
-          [
-            ['--template-url=URL', 'The URL of the git repo containing a ' \
-                                  'compatible template'],
-          ].concat(super)
-        end
 
         def initialize(argv)
           @name = argv.shift_argument
-          @template_url = argv.option('template-url', TEMPLATE_REPO)
+          @shell_name = argv.shift_argument
           super
           @additional_args = argv.remainder!
         end
 
         def validate!
           super
-          help! 'A name for the Pod is required.' unless @name
-          help! 'The Pod name cannot contain spaces.' if @name.match(/\s/)
-          help! "The Pod name cannot begin with a '.'" if @name[0, 1] == '.'
+          help! 'A name for the IP is required.' unless @name
+          help! 'The IP name cannot contain spaces.' if @name.match(/\s/)
+          help! "The IP name cannot begin with a '.'" if @name[0, 1] == '.'
+          help! 'A repo url of a shell is required.' unless @shell_name
         end
 
         def run
+          make_project_dir
+          @shell_url = repo_from_name(@shell_name)["git"]
           clone_template
-          configure_template
+          #configure_template
           print_info
         end
 
@@ -56,9 +158,21 @@ module Pod
         extend Executable
         executable :git
 
-        TEMPLATE_REPO = 'https://github.com/CocoaPods/pod-template.git'
-        TEMPLATE_INFO_URL = 'https://github.com/CocoaPods/pod-template'
-        CREATE_NEW_POD_INFO_URL = 'http://guides.cocoapods.org/making/making-a-cocoapod'
+        TEMPLATE_REPO = 'https://github.com/jonsonxp/shell-vc707-xillybus-ap_fifo32.git'
+        
+        CREATE_NEW_POD_INFO_URL = 'http://www.arch.cs.kumamoto-u.ac.jp/hcode'
+
+        def make_project_dir
+          FileUtils.mkdir_p("#{@name}")
+          FileUtils.mkdir_p("#{@name}/ip")
+          FileUtils.mkdir_p("#{@name}/ip/#{@name}")
+          FileUtils.mkdir_p("#{@name}/shell")
+        end
+
+        def repo_from_name(name)
+          set = SourcesManager.fuzzy_search_by_name(name)
+          set.repo_url
+        end
 
         # Clones the template from the remote in the working directory using
         # the name of the Pod.
@@ -67,7 +181,7 @@ module Pod
         #
         def clone_template
           UI.section("Cloning `#{template_repo_url}` into `#{@name}`.") do
-            git! ['clone', template_repo_url, @name]
+            git! ['clone', template_repo_url, "#{@name}/shell"]
           end
         end
 
@@ -101,13 +215,13 @@ module Pod
         # @return String
         #
         def template_repo_url
-          @template_url || TEMPLATE_REPO
+          @shell_url || TEMPLATE_REPO
         end
       end
 
       #-----------------------------------------------------------------------#
 
-      class Lint < Lib
+      class Lint < Ip
         self.summary = 'Validates a Pod'
 
         self.description = <<-DESC

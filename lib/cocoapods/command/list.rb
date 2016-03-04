@@ -1,8 +1,8 @@
 module Pod
   class Command
     class List < Command
-      self.summary = 'List hcode projects'
-      self.description = 'Lists all available hcode projects.'
+      self.summary = 'List hCODE projects'
+      self.description = 'Lists all available hCODE projects.'
 
       def self.options
         [

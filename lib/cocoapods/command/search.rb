@@ -1,7 +1,7 @@
 module Pod
   class Command
     class Search < Command
-      self.summary = 'Search for pods.'
+      self.summary = 'Search for hCODE projects.'
 
       self.description = <<-DESC
         Searches for pods, ignoring case, whose name matches `QUERY`. If the
@@ -53,24 +53,9 @@ module Pod
 
       def run
         ensure_master_spec_repo_exists!
-        if @web
-          web_search
-        else
-          local_search
-        end
+        local_search
       end
 
-      def web_search
-        query_parameter = [
-          ('on:osx' if @supported_on_osx),
-          ('on:ios' if @supported_on_ios),
-          ('on:watchos' if @supported_on_watchos),
-          @query,
-        ].compact.flatten.join(' ')
-        url = "https://cocoapods.org/?q=#{CGI.escape(query_parameter).gsub('+', '%20')}"
-        UI.puts("Opening #{url}")
-        open!(url)
-      end
 
       def local_search
         query_regex = @query.join(' ').strip

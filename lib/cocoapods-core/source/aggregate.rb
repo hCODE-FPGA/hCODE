@@ -124,6 +124,39 @@ module Pod
         result
       end
 
+            # @return [Array<Set>]  the sets that contain the search term.
+      #
+      # @raise  If no source including the set can be found.
+      #
+      # @todo   Clients should raise not this method.
+      #
+      # @see    Source#search_by_name
+      #
+      def fuzzy_search_by_name(query)
+        pods_by_source = {}
+        result = []
+        sources.each do |s|
+          source_pods = s.fuzzy_search(query)
+          pods_by_source[s] = source_pods.map(&:name)
+        end
+
+        root_spec_names = pods_by_source.values.flatten.uniq
+        root_spec_names.each do |pod|
+          result_sources = sources.select do |source|
+            pods_by_source[source].include?(pod)
+          end
+
+          result << Specification::Set.new(pod, result_sources)
+        end
+
+        if result.empty?
+          extra = ', author, summary, or description' if full_text_search
+          raise Informative, 'Unable to find a pod with name' \
+            "#{extra} matching `#{query}'"
+        end
+        result
+      end
+
       public
 
       # @!group Search Index

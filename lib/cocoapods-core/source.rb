@@ -154,7 +154,7 @@ module Pod
       raise ArgumentError, 'No name' unless name
       raise ArgumentError, 'No version' unless version
       path = specs_dir + name + version.to_s
-      specification_path = path + "hfpga.spec"
+      specification_path = path + "hcode.spec"
       #unless specification_path.exist?
       #  specification_path = path + "#{name}.podspec"
       #end
@@ -268,11 +268,9 @@ module Pod
     # @return [Nil] If no Pod with a suitable name was found.
     #
     def fuzzy_search(query)
-      require 'fuzzy_match'
-      pod_name = FuzzyMatch.new(pods).find(query)
-      if pod_name
-        search(pod_name)
-      end
+      regexp_query = /^#{query}$/
+        names = pods.grep(regexp_query)
+        names.map { |pod_name| set(pod_name) }
     end
 
     # @!group Updating the source

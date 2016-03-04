@@ -3,7 +3,7 @@ require 'fileutils'
 module Pod
   class Command
     class Setup < Command
-      self.summary = 'Setup the CocoaPods environment'
+      self.summary = 'Setup the hCODE development kit environment'
 
       self.description = <<-DESC
         Creates a directory at `~/.hcode/repos` which will hold your spec-repos.

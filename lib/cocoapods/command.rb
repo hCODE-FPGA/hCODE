@@ -16,26 +16,22 @@ module Pod
 
   class Command < CLAide::Command
     #require 'cocoapods/command/inter_process_communication'
-    require 'cocoapods/command/lib'
+    require 'cocoapods/command/ip'
     require 'cocoapods/command/list'
-    require 'cocoapods/command/outdated'
     require 'cocoapods/command/project'
     require 'cocoapods/command/repo'
     require 'cocoapods/command/setup'
     require 'cocoapods/command/spec'
-    require 'cocoapods/command/init'
-    require 'cocoapods/command/cache'
-    require 'cocoapods/command/env'
     require 'cocoapods/command/search'
 
     self.abstract_command = true
     self.command = 'hcode'
     self.version = VERSION
-    self.description = 'hCODE, the FPGA accelerator manager.'
+    self.description = 'hCODE development kit, the FPGA accelerator manager. Visit http://arch.cs.kumamoto-u.ac.jp/hcode for more details.'
     self.plugin_prefixes = %w(claide cocoapods)
 
     #[Install, Update, Outdated, IPC::Podfile, IPC::Repl].each { |c| c.send(:include, ProjectDirectory) }
-    [Outdated].each { |c| c.send(:include, Project) }
+    #[Outdated].each { |c| c.send(:include, Project) }
 
     def self.options
       [
@@ -112,7 +108,7 @@ module Pod
     #
     def verify_podfile_exists!
       unless config.podfile
-        raise Informative, "No `Podfile' found in the project directory."
+        raise Informative, "No `hCODE.conf' found in the project directory."
       end
     end
 
@@ -124,7 +120,7 @@ module Pod
     #
     def verify_lockfile_exists!
       unless config.lockfile
-        raise Informative, "No `Podfile.lock' found in the project directory, run `pod install'."
+        raise Informative, "No `hCODE.conf.lock' found in the project directory, run `hcode install'."
       end
     end
 

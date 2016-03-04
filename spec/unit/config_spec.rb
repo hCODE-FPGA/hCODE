@@ -88,16 +88,16 @@ module Pod
     #-------------------------------------------------------------------------#
 
     describe 'Paths' do
-      it 'returns the working directory as the installation root if a Podfile can be found' do
+      it 'returns the working directory as the installation root if a hCODE.conf can be found' do
         Dir.chdir(temporary_directory) do
-          File.open('Podfile', 'w') {}
+          File.open('hCODE.conf', 'w') {}
           @config.installation_root.should == temporary_directory
         end
       end
 
-      it 'returns the parent directory which contains the Podfile if it can be found' do
+      it 'returns the parent directory which contains the hCODE.conf if it can be found' do
         Dir.chdir(temporary_directory) do
-          File.open('Podfile', 'w') {}
+          File.open('hCODE.conf', 'w') {}
           sub_dir = temporary_directory + 'sub_dir'
           sub_dir.mkpath
           Dir.chdir(sub_dir) do
@@ -106,7 +106,7 @@ module Pod
         end
       end
 
-      it 'it returns the working directory as the installation root if no Podfile can be found' do
+      it 'it returns the working directory as the installation root if no hCODE.conf can be found' do
         Dir.chdir(temporary_directory) do
           @config.installation_root.should == temporary_directory
         end
@@ -120,9 +120,9 @@ module Pod
         @config.installation_root.should == temporary_directory
       end
 
-      it 'returns the path to the project Podfile if it exists' do
-        (temporary_directory + 'Podfile').open('w') { |f| f << '# Yo' }
-        @config.podfile_path.should == temporary_directory + 'Podfile'
+      it 'returns the path to the project hCODE.conf if it exists' do
+        (temporary_directory + 'hCODE.conf').open('w') { |f| f << '# Yo' }
+        @config.podfile_path.should == temporary_directory + 'hCODE.conf'
       end
 
       it 'can detect yaml Podfiles' do
@@ -139,10 +139,10 @@ module Pod
         @config.sandbox_root.should == temporary_directory + 'Pods'
       end
 
-      it 'returns the Podfile path' do
+      it 'returns the hCODE.conf path' do
         Dir.chdir(temporary_directory) do
-          File.open('Podfile', 'w') {}
-          @config.podfile_path.should == temporary_directory + 'Podfile'
+          File.open('hCODE.conf', 'w') {}
+          @config.podfile_path.should == temporary_directory + 'hCODE.conf'
         end
       end
 
@@ -154,9 +154,9 @@ module Pod
 
       it 'returns the Lockfile path' do
         Dir.chdir(temporary_directory) do
-          File.open('Podfile', 'w') {}
-          File.open('Podfile.lock', 'w') {}
-          @config.lockfile_path.should == temporary_directory + 'Podfile.lock'
+          File.open('hCODE.conf', 'w') {}
+          File.open('hCODE.conf.lock', 'w') {}
+          @config.lockfile_path.should == temporary_directory + 'hCODE.conf.lock'
         end
       end
 
