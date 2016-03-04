@@ -5,11 +5,13 @@ HW developer
  + shell/ip/app and driver folder organize, git
  + upload hcode project to self Github repo, and send a hcode.spec to hFPGA SPEC repo.
  + search hcode projects by any name string, shell/ip/app type, etc.
+ - Support IP generator parameters, specific parameters for each shell in hcode.spec
+ - IP generate, compile script, notice device platform
+ - download multiple IPs to ip folder
 
 SW developer
  + create ip and manage a useable folder/project which a given shell.
  + download app, shell, ip and manage a useable folder/project.
- - auto compile ip to hdl.
  - auto compile app, shell, ip to bitstream.
  - auto compile shell driver, ip driver, and prepare java wrapper.
 
