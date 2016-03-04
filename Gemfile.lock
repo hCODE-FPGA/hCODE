@@ -1,78 +1,70 @@
 GIT
   remote: https://github.com/CocoaPods/CLAide.git
-  revision: d5a7ef8f3e730f195ecb3dfd2ec5891d1c6988d7
+  revision: 15b7e7de4605ee16dfa4def5e465317c06375a43
   branch: master
   specs:
-    claide (1.0.0.beta.1)
+    claide (0.9.1)
 
 GIT
   remote: https://github.com/CocoaPods/Molinillo.git
-  revision: 163738c406f5cfc1bb7fbc9487b5ae45b8e82ae4
+  revision: 6fb8e35da14b56e91cb9088cc62c9f58a36fe49c
   branch: master
   specs:
-    molinillo (0.4.3)
+    molinillo (0.4.0)
 
 GIT
   remote: https://github.com/CocoaPods/cocoapods-downloader.git
-  revision: 87ef8c7109e974e68b4848c4d04e04ad6d4908d5
+  revision: 41eaf4702dda3fe205da0f82446af4c737a01041
   branch: master
   specs:
-    cocoapods-downloader (1.0.0.beta.1)
+    cocoapods-downloader (0.9.3)
 
 GIT
   remote: https://github.com/CocoaPods/cocoapods-stats.git
-  revision: 8569ef61bd7d52f5d6d3e91ceb299bda7b86748c
+  revision: 2cd4641aaadea0590233f9449552e8adb2398f0c
   branch: master
   specs:
-    cocoapods-stats (1.0.0.beta.3)
-
-GIT
-  remote: https://github.com/segiddins/json.git
-  revision: d4011cabfaa80e9b0da81947b5e9b38dd47359db
-  branch: seg-1.7.7-ruby-2.2
-  specs:
-    json (1.7.7)
+    cocoapods-stats (0.6.2)
 
 PATH
   remote: .
   specs:
     hcode (1.0.0.beta.4)
       activesupport (>= 4.0.2)
-      claide (>= 1.0.0.beta.1, < 2.0)
-      cocoapods-downloader (>= 1.0.0.beta.1, < 2.0)
-      cocoapods-stats (>= 1.0.0.beta.3, < 2.0)
+      claide (~> 0.9.1)
+      cocoapods-downloader (~> 0.9.3)
+      cocoapods-stats (~> 0.6.2)
       colored (~> 1.2)
       escape (~> 0.0.4)
       fourflusher (~> 0.3.0)
-      molinillo (~> 0.4.3)
+      molinillo (~> 0.4.0)
       nap (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.5.1)
+    activesupport (4.2.5.2)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.3.6)
+    addressable (2.4.0)
     ast (2.2.0)
-    astrolabe (1.3.1)
-      parser (~> 2.2)
     awesome_print (1.6.1)
     bacon (1.2.0)
     clintegracon (0.8.1)
       colored (~> 1.2)
       diffy
-    coderay (1.1.0)
+    coderay (1.1.1)
     colored (1.2)
-    crack (0.4.2)
+    crack (0.4.3)
       safe_yaml (~> 1.0.0)
     diffy (3.1.0)
     escape (0.0.4)
-    ffi (1.9.6)
+    ffi (1.9.10)
     fourflusher (0.3.0)
+    hashdiff (0.3.0)
     i18n (0.7.0)
     inch (0.7.0)
       pry
@@ -82,6 +74,7 @@ GEM
     inch_by_inch (1.0.0)
       inch (~> 0.7.0)
       rake (~> 10.0)
+    json (1.8.3)
     kicker (3.0.0)
       listen (~> 1.3.0)
       notify (~> 0.5.2)
@@ -98,7 +91,7 @@ GEM
       mocha (>= 0.13.0)
     nap (1.1.0)
     notify (0.5.2)
-    parser (2.3.0.2)
+    parser (2.3.0.6)
       ast (~> 2.2)
     powerpack (0.1.1)
     prettybacon (0.0.2)
@@ -107,20 +100,20 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rainbow (2.0.0)
-    rake (10.4.2)
-    rb-fsevent (0.9.4)
-    rb-inotify (0.9.5)
+    rainbow (2.1.0)
+    rake (10.5.0)
+    rb-fsevent (0.9.7)
+    rb-inotify (0.9.7)
       ffi (>= 0.5.0)
-    rb-kqueue (0.2.3)
+    rb-kqueue (0.2.4)
       ffi (>= 0.5.0)
-    rubocop (0.34.2)
-      astrolabe (~> 1.3)
-      parser (>= 2.2.2.5, < 3.0)
+    rubocop (0.37.2)
+      parser (>= 2.3.0.4, < 3.0)
       powerpack (~> 0.1)
       rainbow (>= 1.99.1, < 3.0)
-      ruby-progressbar (~> 1.4)
-    ruby-prof (0.15.2)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 0.3)
+    ruby-prof (0.15.9)
     ruby-progressbar (1.7.5)
     safe_yaml (1.0.4)
     slop (3.6.0)
@@ -128,12 +121,14 @@ GEM
     term-ansicolor (1.3.2)
       tins (~> 1.0)
     thread_safe (0.3.5)
-    tins (1.8.1)
+    tins (1.8.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    webmock (1.20.4)
+    unicode-display_width (0.3.1)
+    webmock (1.24.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
+      hashdiff
     yard (0.8.7.6)
 
 PLATFORMS
@@ -150,7 +145,7 @@ DEPENDENCIES
   diffy
   hcode!
   inch_by_inch
-  json!
+  json
   kicker
   mocha
   mocha-on-bacon
