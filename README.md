@@ -6,30 +6,30 @@ The project in this repository is the online IP manager part of hCODE platform. 
 ## Installation
 These steps are based on Ubuntu 14.04
 
-###install build essentials
+1. install build essentials
 sudo apt-get -y install build-essential
 
-###install ruby2.0 and ruby2.0-dev
+2. install ruby2.0 and ruby2.0-dev
 sudo add-apt-repository -y ppa:brightbox/ruby-ng
 sudo apt-get update
 sudo apt-get -y install ruby2.0 ruby2.0-dev
 
-###install git and bundler
+3. install git and bundler
 sudo apt-get -y install git
 sudo gem install bundle
 
-###Clone hCODE from Github
+4. Clone hCODE from Github
 git clone https://github.com/hCODE-FPGA/hCODE
 
-###Install dependencies with bundle
+5. Install dependencies with bundle
 cd hCODE
 bundle
 
-###Initialize setup the hCODE
+6. Initialize setup the hCODE
 cd bin
 ./hcode setup
 
-You can put the location of hcode executable script into PATH and use it conveniently.
+You can put the location of hcode executable script into PATH and use it for convenient.
 
 
 ## Usage examples
