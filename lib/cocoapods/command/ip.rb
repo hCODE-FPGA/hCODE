@@ -36,7 +36,7 @@ module Pod
           @ip_tag = url["tag"] unless @ip_tag
 
           UI.puts "Get ip #{@ip_name} ~> #{@ip_tag}".green
-          clone(url["git"], @ip_tag, "#{@ip_name}/ip/#{@ip_name}")
+          #clone(url["git"], @ip_tag, "#{@ip_name}/ip/#{@ip_name}")
           shells_for_ip()
           
           #configure_template
@@ -53,8 +53,14 @@ module Pod
         executable :git
 
         def repo_from_name(name)
-          set = SourcesManager.fuzzy_search_by_name(name)
-          set.repo_url
+          UI.puts name
+          begin
+            set = SourcesManager.fuzzy_search_by_name(name)
+            set.repo_url
+          rescue => e
+            UI.puts "Error: Can not find repo for shall #{name}.".red
+            nil
+          end
         end
 
         def make_project_dir
@@ -69,12 +75,13 @@ module Pod
           json = File.read("#{@ip_name}/ip/#{@ip_name}/hcode.spec")
           spec = JSON.parse(json)
           urls = Array.new
-          spec["shells"].each{|shell|
-              urls.push repo_from_name(shell[0])
+          spec["platforms"].each{|platform|
+                repo_url = repo_from_name(platform[1]["shell"])
+                urls.push repo_url if repo_url != nil
           }
 
           index = 0
-          if spec["shells"].length > 1
+          if urls.length > 1
             message = "Choose a shell.".green
             index = UI.choose_from_array(urls, message)
           end

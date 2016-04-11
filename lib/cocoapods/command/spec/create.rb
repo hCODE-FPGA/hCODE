@@ -6,12 +6,12 @@ module Pod
         self.summary = 'Create spec file stub.'
 
         self.description = <<-DESC
-          Creates a PodSpec, in the current working dir, called `NAME.podspec'.
-          If a GitHub url is passed the spec is prepopulated.
+          Creates a hCODE Spec file in the current working dir, called `hcode.spec'.
+          A hCODE project type (shell, ip or app) is required.
         DESC
 
         self.arguments = [
-          CLAide::Argument.new(%w(NAME https://github.com/USER/REPO), false),
+          CLAide::Argument.new(%w(shell ip app), false),
         ]
 
         def initialize(argv)
