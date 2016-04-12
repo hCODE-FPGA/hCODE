@@ -168,12 +168,6 @@ module Pod
     "git": "https://example.com/test.git",
     "tag": "0.0.1"
   },
-  "platforms": {
-    "vc707": "0.0.0"
-  },
-  "shells": {
-    "name": "shell-vc707-xillybus-ap_fifo32"
-  },
   "code": {
     "verilog": true, 
     "verilog_generator": false,
@@ -186,10 +180,23 @@ module Pod
     "version": "vivado2015.3",
     "version": "vivado2015.4"
   },
-  "properties": {
-    "max-clock": "250MHz",
+  "platforms": {
+    "vc707": {
+      "shell": "shell-vc707-xillybus-ap_fifo32",
+      "size": 128,
+      "reference": " ip_mergesorter_32bit ip_mergesorter_32bit_0 (.ap_clk(ip_clk), .ap_rst(~ip_rst_n), .in_V_dout(in_r_dout), .in_V_empty_n(in_r_empty_n), .in_V_read(in_r_read), .out_V_din(out_r_din), .out_V_full_n(!out_r_full), .out_V_write(out_r_write));",
+      "clk_period": 10
+    },
+    "zybo": {
+      "shell": "shell-zybo-xillybus-ap_fifo32",
+      "size": 32,
+      "reference": " ip_mergesorter_32bit ip_mergesorter_32bit_0 (.ap_clk(ip_clk), .ap_rst(~ip_rst_n), .in_V_dout(in_r_dout), .in_V_empty_n(in_r_empty_n), .in_V_read(in_r_read), .out_V_din(out_r_din), .out_V_full_n(!out_r_full), .out_V_write(out_r_write));",
+      "clk_period": 5
+    }
+  },
+  "interfaces": {
     "host-fpga": {
-        "name": "xillybus-eval-virtex7-1.2c",
+        "name": "xillybus",
         "interface": {
             "protocol" : "ap-stream",
             "datawidth" : "32"
