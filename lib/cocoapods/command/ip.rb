@@ -2,7 +2,6 @@ require 'cocoapods/command/ip/create'
 require 'cocoapods/command/ip/get'
 require 'cocoapods/command/ip/make'
 require 'cocoapods/command/ip/install'
-require 'cocoapods/command/ip/program'
 
 module Pod
   class Command

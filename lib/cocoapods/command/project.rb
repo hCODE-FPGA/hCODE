@@ -73,10 +73,9 @@ module Pod
     class Install < Command
       include Project
 
-      self.summary = 'Install shell, ip, or app defined in hCODE.conf file.'
-
+      self.summary = 'Install shell, ip, or app defined in hcode.conf file.'
       self.description = <<-DESC
-        Downloads all shell, ip, or app defined in `hCODE.conf`.
+        Downloads all shell, ip, or app defined in `hcode.conf`.
       DESC
 
       def run

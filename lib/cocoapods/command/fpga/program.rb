@@ -1,10 +1,10 @@
 module Pod
   class Command
-    class Ip < Command
+    class Fpga < Command
       #-----------------------------------------------------------------------#
       #Burn an IP bitstream to FPGA
       #-----------------------------------------------------------------------#
-      class Program < Ip
+      class Program < Fpga
       	self.summary = 'Program an IP bitstream to FPGA.'
 
         self.description = <<-DESC
@@ -54,6 +54,7 @@ module Pod
       	  File.write(".hcode.script.program.tcl", @burn_tcl)
       	  system "vivado -nolog -nojournal -mode batch -source .hcode.script.program.tcl"
       	  UI.puts "Success: FPGA is programmed."
+      	  system "rm -rf .hcode.script.program.tcl"
         end
 
         private

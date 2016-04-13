@@ -17,8 +17,9 @@ module Pod
   class Command < CLAide::Command
     #require 'cocoapods/command/inter_process_communication'
     require 'cocoapods/command/ip'
+    require 'cocoapods/command/fpga'
     require 'cocoapods/command/list'
-    require 'cocoapods/command/project'
+    #require 'cocoapods/command/project'
     require 'cocoapods/command/repo'
     require 'cocoapods/command/setup'
     require 'cocoapods/command/spec'
