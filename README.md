@@ -32,9 +32,9 @@ These steps are based on Ubuntu 14.04
 You can put the location of hcode executable script into PATH and use it for convenient.
 
 
-## Command List
-| Command                                   | Explain                                                                           |
-| ------------------------------------------|:----------------------------------------------------------------------------------|
+## Commands List
+| Commands                                   | Functions                                                                           |
+| ------------------------------------------|:----------------------------------------------------------|
 | ./hcode setup   							| Setup: pull the repo to ~/.hcode.													|
 | ./hcode list    							| List all hcode projects.															|
 | ./hcode search [text]						| Search hcode projects with [text] in their name.									|
