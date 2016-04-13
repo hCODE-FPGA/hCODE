@@ -47,6 +47,9 @@ You can put the location of hcode executable script into PATH and use it for con
 | ./hcode repo push [NAME] hcode.spec 		| push hcode.spec to ~/.hcode/repose/[NAME]/ repo 									|
 | ./hcode ip create [NAME] [SHELL]			| Create ip template project of [NAME] using a [SHELL]								|
 | ./hcode ip get [NAME] [TAG]				| Downloading a IP and a compatable SHELL.											|
+| ./hcode ip make [NAME]					| Configure and make the downloaded [NAME] ip. The configuration is based on the platform section in hcode.spec of ip. The generated ip verilog files are then integrated with the shell project. The project will be opened in Vivado, changes and bitstream generation can then be performed.		|
+| ./hcode fpga program [NAME]				| Give a bitstream file or folder of [NAME]. This command find bitstream file and then program to FPGA.						|
+| ./hcode fpga resetpci						| Reset the PCIe connection after a reconfiguration.											|
 
 ## License
 This project is licenced under the MIT license.
