@@ -6,15 +6,15 @@ The project in this repository is the online IP manager part of hCODE platform. 
 ## Installation
 These steps are based on Ubuntu 14.04
 
-1. install build essentials  
+1. Install build essentials  
 *sudo apt-get -y install build-essential*
 
-2. install ruby2.0 and ruby2.0-dev  
+2. Install ruby2.0 and ruby2.0-dev  
 *sudo add-apt-repository -y ppa:brightbox/ruby-ng*  
 *sudo apt-get update*  
 *sudo apt-get -y install ruby2.0 ruby2.0-dev*  
 
-3. install git and bundler  
+3. Install git and bundler  
 *sudo apt-get -y install git*  
 *sudo gem install bundle*  
 
@@ -32,7 +32,7 @@ These steps are based on Ubuntu 14.04
 You can put the location of hcode executable script into PATH and use it for convenient.
 
 
-## Usage examples
+## Command List
 | Command                                   | Explain                                                                           |
 | ------------------------------------------|:----------------------------------------------------------------------------------|
 | ./hcode setup   							| Setup: pull the repo to ~/.hcode.													|
