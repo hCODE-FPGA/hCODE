@@ -26,7 +26,7 @@ module Pod
         end
 
         def run
-          system "cd #{@ip_name}/ip/#{@ip_name} && sh make.sh -driver"
+          system "cd #{@ip_name}/ip/#{@ip_name} && ./make -driver"
         end
       end
     end

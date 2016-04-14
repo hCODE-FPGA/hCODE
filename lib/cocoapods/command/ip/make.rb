@@ -31,7 +31,7 @@ module Pod
           configure_shell
           make_ip
           copy_ip_verilog_to_shell
-          start_vivado
+          make_shell
         end
 
         private
@@ -44,13 +44,13 @@ module Pod
 
         def specs_from_ip
           require 'json'
-          #Read hcode.spec and parse JSON
+          #Read shell hcode.spec and parse JSON
           json = File.read("#{@ip_name}/shell/hcode.spec")
           spec = JSON.parse(json)
           urls = Array.new
           @shell_name = spec["name"]
 
-          #Read hcode.spec and parse JSON
+          #Read ip hcode.spec and parse JSON
           json = File.read("#{@ip_name}/ip/#{@ip_name}/hcode.spec")
           spec = JSON.parse(json)
           urls = Array.new
@@ -71,29 +71,27 @@ module Pod
 
         def configure_ip
           UI.puts "Configuring IP: "
-          system "cd #{@ip_name}/ip/#{@ip_name} && sh configure.sh #{@ip_configure_paras}"
+          system "cd #{@ip_name}/ip/#{@ip_name} && ./configure #{@ip_configure_paras}"
         end
 
         def configure_shell
           UI.puts "Configuring Shell: "
-          system "cd #{@ip_name}/shell && sh configure.sh #{@ip_configure_paras}"
+          system "cd #{@ip_name}/shell && ./configure #{@ip_configure_paras}"
         end
 
         def make_ip
-          system "cd #{@ip_name}/ip/#{@ip_name} && sh make.sh"
+          system "cd #{@ip_name}/ip/#{@ip_name} && ./make"
         end
 
         def copy_ip_verilog_to_shell
+          system "cd #{@ip_name}/shell && ./make -removeip"
           system "rm -rf #{@ip_name}/shell/ip-src/*"
           system "cp -r #{@ip_name}/ip/#{@ip_name}/output/verilog/* #{@ip_name}/shell/ip-src/"
+          system "cd #{@ip_name}/shell && ./make -addip"
         end
 
-        def start_vivado
-          UI.puts "All generated IP are added into shell project, bringing up Vivado now."
-          UI.puts "Please finish bitstream generation in Vivado."
-          system "echo \"remove_files IP_wrapper.v;add_files ./ip-src\" > tmp.tcl"
-          system "cd #{@ip_name}/shell && vivado -nolog -nojournal -source ../../tmp.tcl ./hcode_shell.xpr"
-          system "rm -rf tmp.tcl"
+        def make_shell
+          system "cd #{@ip_name}/shell && ./make"
         end
       end
     end

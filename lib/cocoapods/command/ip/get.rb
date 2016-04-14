@@ -105,7 +105,7 @@ module Pod
         # @return [void]
         #
         def clone(url, tag, dir)
-          UI.section("Cloning #{url} with tag #{tag}.") do
+          UI.section("Cloning #{url} of tag #{tag}.") do
             git! ['clone', url, dir]
             Dir.chdir(dir) { git!('checkout', "tags/#{tag}") } if tag
           end
