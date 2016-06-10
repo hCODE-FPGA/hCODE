@@ -58,7 +58,7 @@ module Pod
             set = SourcesManager.fuzzy_search_by_name(name)
             set.repo_url
           rescue => e
-            UI.puts "Error: Can not find repo for shall #{name}.".red
+            UI.puts "Error: Can not find repo for shell #{name}.".red
             nil
           end
         end
@@ -78,6 +78,11 @@ module Pod
           urls = Array.new
           index = 0
 
+          if(spec["type"] == "shell")
+            UI.puts "The target is a shell project, please use \"hCODE shell get\" command.".red
+            exit
+          end
+              
           #get shell URLs, if support multiple shells, let user choose one
           spec["platforms"].each_with_index{|platform, i|
                 repo_url = repo_from_name(platform[1]["shell"])

@@ -7,7 +7,7 @@ module Pod
   class Command
     class Ip < Command
       self.abstract_command = true
-      self.summary = 'Develop hardware IP'
+      self.summary = 'Develop with hardware IP'
     end
   end
 end

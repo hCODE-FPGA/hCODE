@@ -15,11 +15,10 @@ module Pod
   end
 
   class Command < CLAide::Command
-    #require 'cocoapods/command/inter_process_communication'
     require 'cocoapods/command/ip'
+    require 'cocoapods/command/shell'
     require 'cocoapods/command/fpga'
     require 'cocoapods/command/list'
-    #require 'cocoapods/command/project'
     require 'cocoapods/command/repo'
     require 'cocoapods/command/setup'
     require 'cocoapods/command/spec'
@@ -30,9 +29,6 @@ module Pod
     self.version = VERSION
     self.description = 'hCODE development kit, the FPGA accelerator manager. Visit http://arch.cs.kumamoto-u.ac.jp/hcode for more details.'
     self.plugin_prefixes = %w(claide cocoapods)
-
-    #[Install, Update, Outdated, IPC::Podfile, IPC::Repl].each { |c| c.send(:include, ProjectDirectory) }
-    #[Outdated].each { |c| c.send(:include, Project) }
 
     def self.options
       [
