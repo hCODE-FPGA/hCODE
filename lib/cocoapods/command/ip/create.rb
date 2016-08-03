@@ -26,6 +26,8 @@ module Pod
 
         def initialize(argv)
           @name = argv.shift_argument
+          @acc_name = "acc-#{@name}"
+          @ip_name = "ip-#{@name}"
           @shell_name = argv.shift_argument
           super
           @additional_args = argv.remainder!
@@ -60,10 +62,9 @@ module Pod
         CREATE_NEW_POD_INFO_URL = 'http://www.arch.cs.kumamoto-u.ac.jp/hcode'
 
         def make_project_dir
-          FileUtils.mkdir_p("#{@name}")
-          FileUtils.mkdir_p("#{@name}/ip")
-          FileUtils.mkdir_p("#{@name}/ip/#{@name}")
-          FileUtils.mkdir_p("#{@name}/shell")
+          FileUtils.mkdir_p("#{@acc_name}")
+          FileUtils.mkdir_p("#{@acc_name}/#{@ip_name}")
+          FileUtils.mkdir_p("#{@acc_name}/#{@shell_name}")
         end
 
         def repo_from_name(name)
@@ -77,8 +78,8 @@ module Pod
         # @return [void]
         #
         def clone_template
-          UI.section("Cloning `#{template_repo_url}` into `#{@name}`.") do
-            git! ['clone', template_repo_url, "#{@name}/shell"]
+          UI.section("Cloning `#{template_repo_url}` into `#{@acc_name}`.") do
+            git! ['clone', template_repo_url, "#{@acc_name}/#{@shell_name}"]
           end
         end
 

@@ -90,11 +90,17 @@ module Pod
                 urls.push repo_url if repo_url != nil
                 index = i if repo_url != nil
           }
+          urls.push "No Shell"
  
           url_index = 0
           if urls.length > 1
             message = "Choose a shell.".green
             url_index = UI.choose_from_array(urls, message)
+          end
+
+          if url_index == urls.length - 1
+            UI.puts "Only IP is donwloaded."
+            exit
           end
 
           #Get IP configurations for selected shell
