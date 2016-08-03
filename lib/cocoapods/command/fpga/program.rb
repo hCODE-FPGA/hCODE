@@ -33,23 +33,23 @@ module Pod
           else
           	require 'find'
           	bit_file_paths = []
-			Find.find(@bitstream_file) do |path|
-			  bit_file_paths << path if path =~ /.*\.bit$/
-			end
+			      Find.find(@bitstream_file) do |path|
+			        bit_file_paths << path if path =~ /.*\.bit$/
+			      end
 
-	        if bit_file_paths.length > 1
-	          message = "Please choose a bitstream.".green
-	          bit_index = UI.choose_from_array(bit_file_paths, message)
-	          @burn_tcl = prepare_tcl(bit_file_paths[bit_index])
-	        elsif bit_file_paths.length == 1
-	          UI.puts "Found bitstream #{bit_file_paths[0]}."
-	          @burn_tcl = prepare_tcl(bit_file_paths[0])
-	        else
-	          UI.puts "No bitstream is found in folder #{@bitstream_file}.".red
-	          exit
-	        end
-			
+  	        if bit_file_paths.length > 1
+  	          message = "Please choose a bitstream.".green
+  	          bit_index = UI.choose_from_array(bit_file_paths, message)
+  	          @burn_tcl = prepare_tcl(bit_file_paths[bit_index])
+  	        elsif bit_file_paths.length == 1
+  	          UI.puts "Found bitstream #{bit_file_paths[0]}."
+  	          @burn_tcl = prepare_tcl(bit_file_paths[0])
+  	        else
+  	          UI.puts "No bitstream is found in folder #{@bitstream_file}.".red
+  	          exit
+  	        end
       	  end
+          
       	  UI.puts "Start to program the FPGA."
       	  File.write(".hcode.script.program.tcl", @burn_tcl)
       	  system "vivado -nolog -nojournal -mode batch -source .hcode.script.program.tcl"

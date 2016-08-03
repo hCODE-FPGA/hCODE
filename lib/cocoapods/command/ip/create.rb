@@ -57,7 +57,6 @@ module Pod
         executable :git
 
         TEMPLATE_REPO = 'https://github.com/jonsonxp/shell-vc707-xillybus-ap_fifo32.git'
-        
         CREATE_NEW_POD_INFO_URL = 'http://www.arch.cs.kumamoto-u.ac.jp/hcode'
 
         def make_project_dir

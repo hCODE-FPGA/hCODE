@@ -225,7 +225,7 @@ module Pod
             raise Informative, "Couldn't find #{@podspec}" unless path.exist?
             [path]
           else
-            files = Pathname.glob('*.podspec{,.json}')
+            files = Pathname.glob('*.spec{,.json}')
             raise Informative, "Couldn't find any podspec files in current directory" if files.empty?
             files
           end

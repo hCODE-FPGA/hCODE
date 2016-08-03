@@ -16,16 +16,17 @@ module Pod
         ]
 
         def initialize(argv)
-          @ip_name = argv.shift_argument
+          @acc_name = argv.shift_argument
           super
         end
 
         def validate!
           super
-          help! 'A name for the IP folder is required.' unless @ip_name
+          help! 'A name for the IP folder is required.' unless @acc_name
         end
 
         def run
+          get_names
           specs_from_ip
           configure_ip
           configure_shell
@@ -42,56 +43,97 @@ module Pod
         extend Executable
         executable :git
 
+        def get_names
+            @ip_name = ""
+            @shell_name = ""
+
+            require 'find'
+            bit_file_paths = []
+            Find.find(@acc_name) do |path|
+              bit_file_paths << path if path =~ /.hcode\.spec$/
+            end
+
+            if bit_file_paths.length > 0
+              bit_file_paths.each{|path|
+                puts path
+                require 'json'
+                json = File.read(path)
+                spec = JSON.parse(json)
+                name = spec["name"]
+
+                @ip_name = name if name.include?'ip-'
+                @shell_name = name if name.include?'shell-'
+              }
+              if @ip_name == "" || @shell_name == ""
+                UI.puts "Cannot find IP or Shell project, please check the acclerator project #{acc_name}.".red
+                exit
+              end
+            else
+              UI.puts "No bitstream is found in folder #{@bitstream_file}.".red
+              exit
+            end
+        end
+
         def specs_from_ip
+          @ip_configure_paras = ""
+
           require 'json'
           #Read shell hcode.spec and parse JSON
-          json = File.read("#{@ip_name}/shell/hcode.spec")
+          json = File.read("#{@acc_name}/#{@shell_name}/hcode.spec")
           spec = JSON.parse(json)
           urls = Array.new
           @shell_name = spec["name"]
+          #Get Sehll hardware parameters
+          spec["hardware"].each{|key, value|
+            @ip_configure_paras += "-#{key} \'#{value}\' "
+          }
 
           #Read ip hcode.spec and parse JSON
-          json = File.read("#{@ip_name}/ip/#{@ip_name}/hcode.spec")
+          json = File.read("#{@acc_name}/#{@ip_name}/hcode.spec")
           spec = JSON.parse(json)
           urls = Array.new
           index = 0
-          @ip_configure_paras = ""
+          
 
+          shell_names = spec["shell"].keys
           #get shell URLs, if support multiple shells, let user choose one
-          spec["platforms"].each_with_index{|platform, i|
-            index = i if platform[1]["shell"] == @shell_name
+          shell_names.each_with_index{|name,i|
+            index = i if name == @shell_name
           }
 
           #Get IP configurations for selected shell
-          keys = spec["platforms"].keys
-          spec["platforms"][keys[index]].each{|key, value|
-            @ip_configure_paras += "-#{key} \"#{value}\" "
+          spec["shell"][shell_names[index]].each{|key, value|
+            @ip_configure_paras += "-#{key} \'#{value}\' "
           }
         end
 
         def configure_ip
+          cmd = "cd #{@acc_name}/#{@ip_name} && ./configure #{@ip_configure_paras}"
           UI.puts "Configuring IP: "
-          system "cd #{@ip_name}/ip/#{@ip_name} && ./configure #{@ip_configure_paras}"
+          UI.puts cmd
+          system cmd
         end
 
         def configure_shell
+          cmd = "cd #{@acc_name}/#{@shell_name} && ./configure #{@ip_configure_paras}"
           UI.puts "Configuring Shell: "
-          system "cd #{@ip_name}/shell && ./configure #{@ip_configure_paras}"
+          UI.puts cmd
+          system cmd
         end
 
         def make_ip
-          system "cd #{@ip_name}/ip/#{@ip_name} && ./make"
+          system "cd #{@acc_name}/#{@ip_name} && ./make"
         end
 
         def copy_ip_verilog_to_shell
-          system "cd #{@ip_name}/shell && ./make -removeip"
-          system "rm -rf #{@ip_name}/shell/ip-src/*"
-          system "cp -r #{@ip_name}/ip/#{@ip_name}/output/verilog/* #{@ip_name}/shell/ip-src/"
-          system "cd #{@ip_name}/shell && ./make -addip"
+          system "cd #{@acc_name}/#{@shell_name} && ./make -removeip"
+          system "rm -rf #{@acc_name}/#{@shell_name}/ip-src/*"
+          system "cp -r #{@acc_name}/#{@ip_name}/output/verilog/* #{@acc_name}/#{@shell_name}/ip-src/"
+          system "cd #{@acc_name}/#{@shell_name} && ./make -addip"
         end
 
         def make_shell
-          system "cd #{@ip_name}/shell && ./make"
+          system "cd #{@acc_name}/#{@shell_name} && ./make"
         end
       end
     end
