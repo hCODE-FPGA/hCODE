@@ -30,7 +30,7 @@ module Pod
 
         def run
           @acc_name = "acc-#{@ip_name.gsub 'ip-',''}"
-          url = repo_from_name(@ip_name)
+          url = repo_from_name(@ip_name, "")
           make_project_dir
 
           @ip_tag = url["tag"] unless @ip_tag
@@ -53,8 +53,8 @@ module Pod
         extend Executable
         executable :git
 
-        def repo_from_name(name)
-          UI.puts name
+        def repo_from_name(name, option)
+          UI.puts "#{name}#{option}"
           begin
             set = SourcesManager.fuzzy_search_by_name(name)
             set.repo_url
@@ -75,7 +75,6 @@ module Pod
           json = File.read("#{@acc_name}/#{@ip_name}/hcode.spec")
           spec = JSON.parse(json)
           urls = Array.new
-          index = 0
 
           if(spec["type"] == "shell")
             UI.puts "The target is a shell project, please use \"hCODE shell get\" command.".red
@@ -86,10 +85,23 @@ module Pod
               
           #get shell URLs, if support multiple shells, let user choose one
           spec["shell"].each_with_index{|shell, i|
-                repo_url = repo_from_name(keys[i])
+                repo_url = repo_from_name(keys[i], "")
                 urls.push repo_url if repo_url != nil
-                index = i if repo_url != nil
           }
+
+          spec["shell"].each_with_index{|shell, i|
+            compatible_shell = getCompatibleShell(keys[i])
+            if (compatible_shell != nil)
+              compatible_shell.each{|k,v|
+                if (!keys.include?k)
+                  keys.push k
+                  repo_url = repo_from_name(k, "(May compatible: #{v})")
+                  urls.push repo_url if repo_url != nil
+                end
+              }
+            end
+          }
+
           urls.push "No Shell"
  
           url_index = 0
@@ -106,6 +118,12 @@ module Pod
           #Get IP configurations for selected shell
           @shell_name = keys[url_index]
           clone(urls[url_index]["git"], urls[url_index]["tag"], "#{@acc_name}/#{@shell_name}")
+        end
+
+        def getCompatibleShell(shellname)
+          json = File.read(File.expand_path("~/.hcode/compatible_shell.json"))
+          shells = JSON.parse(json)
+          return shells[shellname]["compatible_shell"]
         end
 
         # Clones the repo from the remote in the path directory using

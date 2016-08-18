@@ -34,6 +34,7 @@ module Pod
             set_master_repo_url
             set_master_repo_branch
             update_master_repo
+	    gene_compatible_shell
           else
             add_master_repo
           end
@@ -108,6 +109,45 @@ module Pod
       #
       def master_repo_dir
         SourcesManager.master_repo_dir
+      end
+
+      # Analysis SPEC files and generate compatible_shell list file under ~/.hcode
+      def gene_compatible_shell
+      	require 'find'
+      	require 'json'
+      	shells = {}
+      	#Read shells' info from SPEC files
+      	Find.find(File.expand_path("~/.hcode/repos/master/Specs")) do |path|
+      	  if path =~ /.*hcode\.spec$/
+        	  json = File.read(path)
+            spec = JSON.parse(json)
+        	  if(spec["type"] == "shell")
+        	    shell = {}
+        	    shell[:name] = spec["name"]
+              shell[:compatible_shell] = Hash.new
+        	    if (spec["compatible_shell"] != nil)
+        	      spec["compatible_shell"].each{|k, v|
+        	        shell[:compatible_shell][k] = v
+        	      }
+        	    end
+        	    shells[shell[:name]] = shell
+        	  end
+      	  end
+      	end
+
+        shells.each{|k_i,v_i|
+          v_i[:compatible_shell].each{|k_j, v_j|
+            if(shells[k_j] != nil)
+              shells[k_j][:compatible_shell][k_i] = v_j
+            else
+              puts "No shell exist: #{k_j}"
+            end
+          }
+        }
+
+        File.open(File.expand_path("~/.hcode/compatible_shell.json"), 'w') { |fo| 
+          fo.puts shells.to_json
+        }
       end
     end
   end
