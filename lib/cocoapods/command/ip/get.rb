@@ -121,7 +121,7 @@ module Pod
         end
 
         def getCompatibleShell(shellname)
-          json = File.read(File.expand_path("~/.hcode/compatible_shell.json"))
+          json = File.read(File.expand_path("#{Dir.home}/.hcode/compatible_shell.json"))
           shells = JSON.parse(json)
           return shells[shellname]["compatible_shell"]
         end
