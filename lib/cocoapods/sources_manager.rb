@@ -175,6 +175,16 @@ module Pod
         sets[0]
       end
 
+      def get_tag_by_name (ip_name)
+        begin
+          set = fuzzy_search_by_name(ip_name)
+          set.repo_url["tag"]
+        rescue => e
+          UI.puts "Error: Can not find repo for #{ip_name}.".red
+          nil
+        end
+      end
+
       # Returns given set array by sorting it in-place.
       #
       # @param  [Array<Set>] sets
@@ -476,6 +486,16 @@ module Pod
       #
       def master_repo_functional?
         master_repo_dir.exist? && repo_compatible?(master_repo_dir)
+      end
+
+      def get_compatible_shell(shellname)
+        json = File.read(File.expand_path("#{Dir.home}/.hcode/compatible_shell.json"))
+        shells = JSON.parse(json)
+        if(shells[shellname])
+          return shells[shellname]["compatible_shell"]
+        else
+          return nil
+        end
       end
 
       private

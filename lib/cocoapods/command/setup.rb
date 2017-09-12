@@ -34,12 +34,12 @@ module Pod
             set_master_repo_url
             set_master_repo_branch
             update_master_repo
-	    gene_compatible_shell
           else
             add_master_repo
           end
+          gene_compatible_shell
         end
-
+        system "mkdir #{Dir.home}/.hcode/temp"
         UI.puts 'Setup completed'.green
       end
 

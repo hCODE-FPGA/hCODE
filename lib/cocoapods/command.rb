@@ -23,6 +23,7 @@ module Pod
     require 'cocoapods/command/setup'
     require 'cocoapods/command/spec'
     require 'cocoapods/command/search'
+    require 'cocoapods/command/cluster'
 
     self.abstract_command = true
     self.command = 'hcode'

@@ -19,12 +19,13 @@ module Pod
 
         def run
           @script_tcl = prepare_tcl()
+          temp_folder = "#{Dir.home}/.hcode/temp"
 
       	  UI.puts "Start to reset the FPGA PCIe connection."
-      	  File.write(".hcode.script.resetpcie.sh", @burn_tcl)
-      	  system "sudo sh .hcode.script.resetpcie.sh"
+      	  File.write("#{temp_folder}/.hcode.script.resetpcie.sh", @burn_tcl)
+      	  system "sudo sh #{temp_folder}/.hcode.script.resetpcie.sh"
       	  UI.puts "Success: PCIe is reset, your accelerator should be work now."
-      	  system "rm -rf .hcode.script.resetpcie.sh"
+      	  system "rm -rf #{temp_folder}/.hcode.script.resetpcie.sh"
         end
 
         private
