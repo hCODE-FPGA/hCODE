@@ -48,6 +48,9 @@ group :development do
   # Code Quality
   gem 'inch_by_inch'
   gem 'rubocop'
+
+  gem 'jimson'
+  gem 'terminal-table'
 end
 
 group :debugging do
