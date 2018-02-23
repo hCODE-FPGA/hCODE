@@ -57,10 +57,12 @@ module Pod
 	          exit
 	        end
           burn_tcl = prepare_tcl(bit_file, @fpga_id)
-          @remote_name = "http://127.0.0.1" if(!@remote_name)
-          program_remote(bit_file, hcode_file, burn_tcl)
+          if(@remote_name)
+            program_remote(bit_file, hcode_file, burn_tcl)
+          else
+	    program_local(bit_file, hcode_file, burn_tcl)
     	  end
-
+        end
         private
         #----------------------------------------#
 
@@ -82,6 +84,14 @@ program_hw_devices [lindex [get_hw_devices] 0]
 refresh_hw_device [lindex [get_hw_devices] 0]
 
           SPEC
+        end
+
+        def program_local(bit_file, hcode_file, burn_tcl)
+          system "cp #{bit_file} #{Dir.home}/.hcode/temp/bitstream.bit"
+          File.write("#{Dir.home}/.hcode/temp/hcode.script.program.tcl", burn_tcl.gsub("$DIR_HOME","#{Dir.home}"))
+          system "vivado -nolog -nojournal -mode batch -source #{Dir.home}/.hcode/temp/hcode.script.program.tcl"
+          system "rm -rf #{Dir.home}/.hcode/temp/hcode.script.program.tcl"
+          system "rm -rf #{Dir.home}/.hcode/temp/bitstream.bit"
         end
 
         def program_remote(bit_file, hcode_file, burn_tcl)
