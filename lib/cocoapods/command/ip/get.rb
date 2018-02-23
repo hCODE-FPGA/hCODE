@@ -104,7 +104,11 @@ module Pod
           end
 
           if (@hcode_file["shell"]["compatible_shell"] == "")
-            shell_in_ip_spec = @hcode_file["shell"]["name"]
+            if(@shell_name)
+                shell_in_ip_spec = @shell_name
+            else
+            	shell_in_ip_spec = @hcode_file["shell"]["name"]
+            end
           else
             shell_in_ip_spec = @hcode_file["shell"]["compatible_shell"]
           end
