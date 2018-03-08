@@ -72,6 +72,8 @@ module Pod
 
                 #Get IPs info on target FPGA
                 resource_ips = Hash.new
+                bandwidth_ips = Hash.new
+
                 ips.each{ |ip_key,ip|
                   ip_status = ip["enable"] == 1 ? "Enable" : "Disable"
                     if (ip["enable"] == 1)
@@ -79,6 +81,7 @@ module Pod
                       result_ips = result_ips + "         Parameters:#{ip["ip_conf"]}\n"
                       result_ips = result_ips + "         Config:#{ip["conf_user"]}@#{ip["conf_date"]}\t\tCreate:#{ip["make_user"]}@#{ip["make_date"]}\n"
                       resource_ips[ip_key] = ip["resource"]
+                      bandwidth_ips[ip_key] = ip["throughput"]
                     else
                        result_ips = result_ips + "* [IP-#{ip_key}] #{ip["name"]}:#{ip["tag"]}\t#{ip_status}\t(#{ip["ip_conf"]})\n".red   
                        result_ips = result_ips + "         Parameters:#{ip["ip_conf"]}\n".red
@@ -87,9 +90,15 @@ module Pod
                 }
                 
                 UI.puts result_ips
-                report_utilization = get_utilization(resource_ips, resource_shell, "used-percentage")
-                slaves_status["#{slave_name}-#{fpga_key}"]["resource"] = get_utilization(resource_ips, resource_shell, "left-number")
+                report_utilization = get_resource_utilization(resource_ips, resource_shell, "used-percentage")
+                report_utilization_log = get_resource_utilization(resource_ips, resource_shell, "left-number")
+                slaves_status["#{slave_name}-#{fpga_key}"]["resource"] = Hash.new
+                report_utilization_log.each_with_index{|resource, id|
+                  slaves_status["#{slave_name}-#{fpga_key}"]["resource"][(id+1).to_s] = resource
+                }
+                slaves_status["#{slave_name}-#{fpga_key}"]["Bandwidth"] = get_bandwidth_utilization(bandwidth_ips, resource_shell)
                 print_utilization(report_utilization)
+
                 UI.puts
               else
                 UI.puts "Unused"
@@ -111,6 +120,7 @@ module Pod
               json = File.read(path)
               spec = JSON.parse(json)
       	      res = spec["resource"]
+              res["Bandwidth"] =spec["interface"]["host"]["bandwidth"]
               res.each{|id, resource|
       	       resource = spec["interface"]["host"]["bandwidth"]
               }
@@ -119,10 +129,20 @@ module Pod
           end
         end
 
-        def get_utilization(resource_ips, resource_shell_all, type)
+        def get_bandwidth_utilization(bandwidth_ips, resource_shell_all)
+          bw_used = 0
+          bandwidth_ips.each{|ip_key,ip|
+            bw_used += ip.to_f
+          }
+          return resource_shell_all["Bandwidth"].to_f - bw_used
+        end
+
+        def get_resource_utilization(resource_ips, resource_shell_all, type)
           report_utilizations = Array.new
 
           resource_shell_all.each{|id, resource_shell|
+            next if(id == "Bandwidth")
+
             resource_used = Hash.new
             report_utilization = Hash.new
 

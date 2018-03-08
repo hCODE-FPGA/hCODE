@@ -75,6 +75,7 @@ module Pod
               ip_cache = "#{Dir.home}/.hcode/cache/#{ip["cache_hash"]}"
 
               if ((!File.directory?(ip_cache)) || (!@cache))
+                #Only get IP mode (with argument --shell=no)
                 if !File.directory?(@shell_name)
                   system "hcode ip get #{ip["name"]}:#{ip["tag"]} --shell=no"
                   system "mv #{ip["name"]} ch#{channel}-#{ip["name"]}"

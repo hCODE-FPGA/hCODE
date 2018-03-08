@@ -1,7 +1,7 @@
 require 'cocoapods/command/cluster/master'
 require 'cocoapods/command/cluster/slave'
 require 'cocoapods/command/cluster/status'
-
+require 'cocoapods/command/cluster/schedule'
 
 module Pod
   class Command

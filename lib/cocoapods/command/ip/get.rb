@@ -127,6 +127,12 @@ module Pod
               spec["shell"][shell_in_ip_spec]["shell_conf"].each{|key, value|
                 ip["shell_conf"] += "-#{key} \'#{value}\' "
               }
+
+              if(spec["shell"][shell_in_ip_spec]["property"].has_key?"throughput")
+                ip["throughput"] = spec["shell"][shell_in_ip_spec]["property"]["throughput"].to_i
+              else
+                ip["throughput"] = 0
+              end
           }
 
           require 'json'
