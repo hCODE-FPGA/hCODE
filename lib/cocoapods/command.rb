@@ -38,7 +38,7 @@ module Pod
     end
 
     def self.run(argv)
-      help! 'You cannot run hCODE as root.' if Process.uid == 0
+      #help! 'You cannot run hCODE as root.' if Process.uid == 0
       verify_xcode_license_approved!
 
       super(argv)
