@@ -102,7 +102,7 @@ module Pod
           param["burn_tcl"] = param["burn_tcl"].gsub("$DIR_HOME","#{Dir.home}")
 
           File.write("#{Dir.home}/.hcode/temp/hcode.script.program.tcl", param["burn_tcl"])
-          #system "vivado -nolog -nojournal -mode batch -source #{Dir.home}/.hcode/temp/hcode.script.program.tcl"
+          system "vivado -nolog -nojournal -mode batch -source #{Dir.home}/.hcode/temp/hcode.script.program.tcl"
 	        recover_ip(fpga_id, -1)
           system "rm -rf #{Dir.home}/.hcode/temp/hcode.script.program.tcl"
           system "rm -rf #{Dir.home}/.hcode/temp/bitstream.bit"
