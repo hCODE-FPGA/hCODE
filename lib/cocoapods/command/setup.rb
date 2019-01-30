@@ -117,7 +117,7 @@ module Pod
       	require 'json'
       	shells = {}
       	#Read shells' info from SPEC files
-      	Find.find(File.expand_path("#{Dir.home}/.hcode/repos/master/Specs")) do |path|
+      	Find.find(File.expand_path("#{Dir.home}/.hcode/repos/")) do |path|
       	  if path =~ /.*hcode\.spec$/
         	  json = File.read(path)
             spec = JSON.parse(json)
